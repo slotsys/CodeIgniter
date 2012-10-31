@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('Acesso n&atilde;o permitido a este roteiro');
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * CodeIgniter Template Class
  *
@@ -7,7 +7,7 @@
  * @package		CodeIgniter
  * @category		Libraries
  * @author		SlotSYS
- * @link		http://github.com/slotsys/CodeIgniter/
+ * @link			http://slotsys.com/codeigniter/libraries/template
  */
 class Template {
 	private $data			= array();
