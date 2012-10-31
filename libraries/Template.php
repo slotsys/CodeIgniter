@@ -7,7 +7,7 @@
  * @package		CodeIgniter
  * @category		Libraries
  * @author		SlotSYS
- * @link			http://slotsys.com/codeigniter/libraries/template
+ * @link		http://github.com/slotsys/CodeIgniter/
  */
 class Template {
 	private $data			= array();
