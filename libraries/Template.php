@@ -6,7 +6,7 @@
 *
 * @package CodeIgniter
 * @category Libraries
-* @author SlotSYS
+* @author SlotSYS (www.slotsys.com), Rodolfo Silva (www.rodolfosilva.com)
 * @link http://github.com/slotsys/CodeIgniter/
 */
 class Template {
