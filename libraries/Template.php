@@ -1,41 +1,72 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * CodeIgniter Template Class
- *
- * Library templates for CodeIgniter
- *
- * @package		CodeIgniter
- * @category		Libraries
- * @author		SlotSYS
- * @link		http://github.com/slotsys/CodeIgniter/
- */
+* CodeIgniter Template Class
+*
+* Library templates for CodeIgniter
+*
+* @package CodeIgniter
+* @category Libraries
+* @author SlotSYS
+* @link http://github.com/slotsys/CodeIgniter/
+*/
 class Template {
+	private $CI;
 	private $data			= array();
-
 	private $template		= 'layouts/default';
-
 	private $title			= '';
-
 	private $desc			= '';
-
 	private $style_block	= '';
-
 	private $script_block	= '';
-
 	private $links			= '';
-
 	private $scripts		= '';
-
 	private $contents		= '';
 
-	private $CI;
+	/**
+	 * Constructor
+	 *
+	 * Simply determines whether the template library exists.
+	 *
+	 */
+	public function __construct(){
+		$this->CI =& get_instance();
+		log_message('debug', 'Template Class Initialized');
+	}
 
-	public function __construct(){ $this->CI =& get_instance(); }
+	/**
+	 * Set the variables
+	 *
+	 * @access	public
+	 * @param	string
+	 * @param	string
+	 * @return	void
+	 */
+	public function set($key, $value = null){
+		if( is_array($key) ){
+			$this->data = $key;
+		}else{
+			$this->data[$key] = $value;
+		}
+	}
 
-	public function set($key, $value = null){ if( is_array($key) ){ $this->data = $key; }else{ $this->data[$key] = $value; } }
+	/**
+	 * Get the variables
+	 *
+	 * @access	public
+	 * @param	string
+	 * @return	array
+	 */
+	public function get($key = null){
+		return $key === null ? $this->data : $this->data[$key];
+	}
 
-	public function get($key = null){ return $key === null ? $this->data : $this->data[$key]; }
-
+	/**
+	 * Formats the source code
+	 *
+	 * @access	private
+	 * @param	string
+	 * @param	string
+	 * @return	string
+	 */
 	private function format($type = '', $source = ''){
 		$script = '';
 		if(trim($source) != ''){
@@ -61,6 +92,16 @@ class Template {
 		return $script;
 	}
 
+	/**
+	 * Writes codes in memory
+	 *
+	 * @access	private
+	 * @param	string
+	 * @param	string
+	 * @param	bolean
+	 * @param	string
+	 * @return	void
+	 */
 	private function set_source($type, $source = '', $inline = true, $after_source = -1){
 		switch($type){
 			case 'style_block':
@@ -76,6 +117,16 @@ class Template {
 		}
 	}
 
+	/**
+	 * Convert array to attributes
+	 *
+	 * @access	private
+	 * @param	array
+	 * @param	array
+	 * @param	string
+	 * @param	string
+	 * @return	string
+	 */
 	private function parse_attributes($options, $default = array(), $insert_before = ' ', $insert_after = null){
 		$options = array_merge($default, $options);
 		$attributes = '';
@@ -89,16 +140,73 @@ class Template {
 		return $attributes;
 	}
 
-	public function script_block($source, $inline = true, $after_source = -1){ $this->set_source('script_block', $source, $inline, $after_source); }
 
-	public function style_block($source, $inline = true, $after_source = -1){ $this->set_source('style_block', $source, $inline, $after_source); }
+	/**
+	 * Set script block
+	 *
+	 * @access	public
+	 * @param	string
+	 * @param	bolean
+	 * @param	string
+	 * @return	void
+	 */
+	public function script_block($source, $inline = true, $after_source = -1){
+		$this->set_source('script_block', $source, $inline, $after_source);
+	}
 
-	public function set_title($title){ $this->title = $title; }
+	/**
+	 * Set style block
+	 *
+	 * @access	public
+	 * @param	string
+	 * @param	bolean
+	 * @param	string
+	 * @return	void
+	 */
+	public function style_block($source, $inline = true, $after_source = -1){
+		$this->set_source('style_block', $source, $inline, $after_source);
+	}
 
-	public function set_desc($desc){ $this->desc = $desc; }
+	/**
+	 * Set title
+	 *
+	 * @access	public
+	 * @param	string
+	 * @return	void
+	 */
+	public function set_title($title){
+		$this->title = $title;
+	}
 
-	public function set_template($template){ $this->template = $template; }
+	/**
+	 * Set description
+	 *
+	 * @access	public
+	 * @param	string
+	 * @return	void
+	 */
+	public function set_desc($desc){
+		$this->desc = $desc;
+	}
 
+	/**
+	 * Set template
+	 *
+	 * @access	public
+	 * @param	string
+	 * @return	void
+	 */
+	public function set_template($template){
+		$this->template = $template;
+	}
+
+	/**
+	 * Search element by key
+	 *
+	 * @access	public
+	 * @param	string
+	 * @return	string
+	 */
 	public function fetch($key = ''){
 		$rtn = '';
 		switch($key){
@@ -129,6 +237,16 @@ class Template {
 		return $rtn;
 	}
 
+	/**
+	 * Loads interface
+	 *
+	 * @access	public
+	 * @param	string
+	 * @param	array
+	 * @param	bolean
+	 * @param	string
+	 * @return	void
+	 */
 	public function load($view = '' , $view_data = array(), $return = false, $template = -1){
 		$view_data = is_array($view_data) ? $view_data : array();
 
@@ -138,12 +256,25 @@ class Template {
 		$this->contents = $this->CI->load->view($view, $this->get(), true);
 
 		if($this->template == ''){
-			if($return){ return $this->fetch('contents'); }else{ echo $this->fetch('contents'); }
+			if($return){
+				return $this->fetch('contents');
+			}else{
+				echo $this->fetch('contents');
+			}
 		}else{
 			return $this->CI->load->view($this->template, $this->get(), $return);
 		}
 	}
 
+	/**
+	 * Generates a script tag
+	 *
+	 * @access	public
+	 * @param	string
+	 * @param	array
+	 * @param	bolean
+	 * @return	void
+	 */
 	public function script($src = '', $options = array(), $inline = true){
 		$options = is_array($options) ? $options : array();
 		if(is_array($src)){
@@ -164,10 +295,28 @@ class Template {
 		
 	}
 
+	/**
+	 * Generates a css tag
+	 *
+	 * @access	public
+	 * @param	string
+	 * @param	array
+	 * @param	bolean
+	 * @return	void
+	 */
 	public function css($href = '', $options = array(), $inline = true){
 		$this->link($href, array( 'href' => '', 'rel' => 'stylesheet', 'type' => 'text/css', 'media' => 'all' ), $inline);
 	}
 
+	/**
+	 * Generates a link tag
+	 *
+	 * @access	public
+	 * @param	string
+	 * @param	array
+	 * @param	bolean
+	 * @return	void
+	 */
 	public function link($href = '', $options = array(), $inline = true){
 		$options = is_array($options) ? $options : array();
 		if(is_array($href)){
