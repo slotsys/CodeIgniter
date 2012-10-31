@@ -1,5 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('Acesso n&atilde;o permitido a este roteiro');
-
+/**
+ * CodeIgniter Template Class
+ *
+ * Library templates for CodeIgniter
+ *
+ * @package		CodeIgniter
+ * @category		Libraries
+ * @author		SlotSYS
+ * @link		http://github.com/slotsys/CodeIgniter/
+ */
 class Template {
 	private $data			= array();
 
