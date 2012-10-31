@@ -1,2 +1,3 @@
 CodeIgniter
 ===========
+Library template
